@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Conectando TikTok · Atajo IA</title>
+<link rel="icon" href="../logo.png">
+<link rel="stylesheet" href="../estilo.css">
+</head>
+<body>
+<main class="caja doc">
+  <p class="etiqueta">Atajo IA</p>
+  <h1 id="titulo">Conectando…</h1>
+  <p id="msg">Un momento.</p>
+</main>
+<script>
+// Retorno de la autorización de TikTok: pasa el código a la computadora que la pidió (127.0.0.1:<puerto>).
+// El puerto viaja en "state" como p<puerto>-<aleatorio>. No se guarda nada en esta página.
+(function () {
+  var q = new URLSearchParams(location.search), st = q.get('state') || '', m = /^p(\d{4,5})-/.exec(st);
+  var t = document.getElementById('titulo'), msg = document.getElementById('msg');
+  if (q.get('error')) { t.textContent = 'No se conectó'; msg.textContent = 'TikTok respondió: ' + (q.get('error_description') || q.get('error')); return; }
+  if (!q.get('code') || !m) { t.textContent = 'Página de conexión'; msg.textContent = 'Esta página solo se usa al conectar TikTok con la app Atajo IA.'; return; }
+  location.replace('http://127.0.0.1:' + m[1] + '/' + location.search);
+})();
+</script>
+</body>
+</html>
